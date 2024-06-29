@@ -1,9 +1,22 @@
+import db from "../../models/db";
+import { users } from "../../models/schema";
+
 class UserService {
-  async registerUser(userName: string, password: string, email: string) {
+  async registerUser(username: string, email: string) {
     try {
-      return true;
+      const result = await db
+        .insert(users)
+        .values({
+          username: username,
+          email: email,
+        })
+        .returning();
+
+      const user = result[0];
+      return user;
     } catch (error) {
-      return error;
+      console.error("Error registering user:", error);
+      throw error;
     }
   }
 }

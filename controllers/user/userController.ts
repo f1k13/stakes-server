@@ -5,10 +5,11 @@ export const registerUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { username, password, email } = req.body;
+  const { username, email } = req.body;
 
   try {
-    const user = userService.registerUser(username, password, email);
+    const user = await userService.registerUser(username, email);
+    console.log(user);
     res.status(201).json(user);
   } catch (error) {
     console.error(error);
