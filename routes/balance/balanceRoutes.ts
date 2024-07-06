@@ -1,12 +1,13 @@
 import express from "express";
+import {
+  getBalance,
+  updateBalance,
+} from "../../controllers/balance/balanceController";
 
 const router = express.Router();
 
-router.post("/create");
+router.get("/get", getBalance);
 
-router.get("/get");
+router.put("/update", updateBalance);
 
-router.put("/update");
-
-
-export default router
+export default router;

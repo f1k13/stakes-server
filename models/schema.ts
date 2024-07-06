@@ -56,7 +56,9 @@ export const transactions = pgTable("transactions", {
 
 export const balance = pgTable("balance", {
   id: serial("id").primaryKey().unique(),
-  userId: integer("user_id").references(() => users.id),
+  userId: integer("user_id")
+    .references(() => users.id)
+    .unique(),
   money: numeric("money", { precision: 10, scale: 2 }).notNull(),
 });
 export const sports = pgTable("sports", {

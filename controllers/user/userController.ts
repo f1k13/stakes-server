@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { userService } from "../../services/user/userService";
+import { getUserFromRequest } from "../../middlewares/auth/authMiddleware";
 
 export const registerUser = async (
   req: Request,
@@ -37,5 +38,14 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       error instanceof Error ? error.message : "Invalid username or password";
     console.error(error);
     res.status(400).json({ message: errorMessage });
+  }
+};
+
+export const getUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = await getUserFromRequest(req);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
   }
 };
