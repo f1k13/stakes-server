@@ -1,16 +1,14 @@
-import express from "express";
-import router from "../routes";
+import { server, PORT } from "./httpServer";
+import { wss } from "./webSocketServer";
 
-const app = express();
-
-const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
-app.use("/api", router);
 const start = async () => {
   try {
-    app.listen(PORT, () => {
-      console.log(`server start on port ${PORT}`);
+    server.listen(PORT, () => {
+      console.log(`HTTP server start on port ${PORT}`);
+    });
+
+    wss.on("listening", () => {
+      console.log("WebSocket server started");
     });
   } catch (error) {
     console.log(error);
